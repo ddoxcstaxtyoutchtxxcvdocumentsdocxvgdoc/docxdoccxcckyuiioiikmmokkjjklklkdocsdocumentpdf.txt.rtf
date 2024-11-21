@@ -50,6 +50,7 @@
             text-align: left;
             margin-bottom: 5px;
             font-size: 14px;
+            margin-left: 10px; /* Moved label 4px to the right */
         }
 
         .input-group {
@@ -68,16 +69,16 @@
         .input-group .icon {
             position: absolute;
             top: calc(50% + 6px); /* Moved down by 6px */
-            left: 10px;
+            left: calc(10px + 6px); /* Moved right by 6px */
             transform: translateY(-50%);
             color: rgba(0, 0, 0, 0.5); /* Dark blurry color */
             font-size: 18px;
         }
 
         .login-box button {
-            width: 100%;
+            width: calc(100% - 12px); /* Reduced width by 6px on each side */
             padding: 10px;
-            background-color: #004080; /* Darker blue */
+            background-color: #5c8db5; /* Lighter blue */
             border: none;
             border-radius: 5px;
             color: white;
@@ -85,7 +86,7 @@
         }
 
         .login-box button:hover {
-            background-color: #003366; /* Darker hover effect */
+            background-color: #4682b4; /* Darker hover effect */
         }
 
         .languages {
